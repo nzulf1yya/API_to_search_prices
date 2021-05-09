@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
+@Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/financial")
 public class FinancialControllerImpl implements FinancialController {
 
@@ -26,8 +27,10 @@ public class FinancialControllerImpl implements FinancialController {
             @QueryValue("stock_index") String stock_index
     ) {
         if(financial_data_provider.equals("yahoo")) {
+            logger.info(financial_data_provider);
             return financialService.getFinancialData(stock_index.toUpperCase());
         } else {
+            logger.info(financial_data_provider);
             return HttpResponse.badRequest("Provider Name Is Invalid");
         }
     }
